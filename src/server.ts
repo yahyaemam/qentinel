@@ -16,7 +16,7 @@ app.get('/getReports', (req, res) => {
     });
 });
 });
-app.use('/favicon.ico', express.static('public/favicon.ico'));
+app.use('/favicon.ico', express.static('/public/favicon.ico'));
 app.get('/index.js', (req, res) => res.sendFile(__dirname + '/public/index.js'));
 
 app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));
