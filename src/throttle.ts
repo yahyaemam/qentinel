@@ -5,12 +5,15 @@ export class Throttle {
     public numberOfRequest: number
     public retryAfter: number
     public numberOfRemaingRequests: number
+    public timerForRestnumOfReq: any
+
     constructor(numOfReq: number, retryAfter: number) {
         this.numberOfRequest = numOfReq || 5;
         this.retryAfter = retryAfter || 10000;
         this.numberOfRemaingRequests = this.numberOfRequest;
     }
     private rateLimit() {
+        clearTimeout(this.timerForRestnumOfReq);
         let checkIfRequestWithinTime = this.retryAfter + this.lastTimeApiCalled;
         let dateNow = Date.now();
         if (dateNow < checkIfRequestWithinTime && !this.numberOfRemaingRequests) {
@@ -32,6 +35,7 @@ export class Throttle {
                 this.timer = setTimeout(this.rateLimit.bind(this), this.retryAfter);
             } else {
                 this.timer = 0;
+                this.timerForRestnumOfReq = setTimeout(()=> this.numberOfRemaingRequests = this.numberOfRequest , this.retryAfter);
             }
         }
 
